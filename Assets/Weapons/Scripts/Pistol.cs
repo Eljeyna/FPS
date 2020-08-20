@@ -34,15 +34,21 @@ public class Pistol : Gun
         }
         else if (Input.GetButton("Reload") && !reloading)
         {
+            player.mouseLook.smooth = false;
             Reload();
         }
         else if (clip <= 0 && nextAttack <= Time.time)
         {
             fireWhenEmpty = false;
+            player.mouseLook.smooth = false;
             if (!Reload())
             {
                 return; // Switch weapon
             }
+        }
+        else if (nextAttack <= Time.time)
+        {
+            player.mouseLook.smooth = false;
         }
     }
 
@@ -50,6 +56,7 @@ public class Pistol : Gun
     {
         if (clip <= 0 && fireWhenEmpty)
         {
+            player.mouseLook.smooth = false;
             nextAttack = Time.time + 0.1f;
             return;
         }
@@ -77,5 +84,6 @@ public class Pistol : Gun
 
         nextAttack = Time.time + fireRatePrimary;
         player.mouseLook.recoil = new Vector2(recoil.x, Random.Range(-recoil.y, recoil.y));
+        player.mouseLook.smooth = true;
     }
 }

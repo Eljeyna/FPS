@@ -7,8 +7,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [Serializable]
     public class MouseLook
     {
-        public float XSensitivity = 2f;
-        public float YSensitivity = 2f;
+        public float XSensitivity = 1f;
+        public float YSensitivity = 1f;
         public bool clampVerticalRotation = true;
         public float MinimumX = -90F;
         public float MaximumX = 90F;
@@ -35,14 +35,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
-            m_CameraTargetRot *= Quaternion.Euler (-xRot - recoil.x, 0f + recoil.y, 0f);
-            recoil.x = 0;
-            recoil.y = 0;
+            //m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
+            m_CameraTargetRot *= Quaternion.Euler (-xRot - recoil.x, recoil.y, 0f);
 
             if (clampVerticalRotation)
-                m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
+                m_CameraTargetRot = ClampRotationAroundXAxis(m_CameraTargetRot);
 
-            if(smooth)
+            /*if (smooth)
             {
                 character.localRotation = Quaternion.Slerp (character.localRotation, m_CharacterTargetRot,
                     smoothTime * Time.deltaTime);
@@ -53,8 +52,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 character.localRotation = m_CharacterTargetRot;
                 camera.localRotation = m_CameraTargetRot;
+                //camera.localRotation = Quaternion.Slerp(camera.localRotation, m_CameraTargetRot, smoothTime * Time.deltaTime);
+            }*/
+
+            character.localRotation = m_CharacterTargetRot;
+            if (smooth)
+            {
+                camera.localRotation = Quaternion.Slerp(camera.localRotation, m_CameraTargetRot, smoothTime * Time.deltaTime);
+            }
+            else
+            {
+                camera.localRotation = m_CameraTargetRot;
             }
 
+            recoil.x = 0;
+            recoil.y = 0;
             UpdateCursorLock();
         }
 
