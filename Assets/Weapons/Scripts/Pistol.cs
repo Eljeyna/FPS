@@ -8,6 +8,7 @@ public class Pistol : Gun
 
     void Update()
     {
+
         if (reloading && nextAttack <= Time.time)
         {
             int cl = Mathf.Min(maxClip - clip, ammo);
@@ -35,12 +36,14 @@ public class Pistol : Gun
         else if (Input.GetButton("Reload") && !reloading)
         {
             player.mouseLook.smooth = false;
+            recoilNum = 0;
             Reload();
         }
         else if (clip <= 0 && nextAttack <= Time.time)
         {
             fireWhenEmpty = false;
             player.mouseLook.smooth = false;
+            recoilNum = 0;
             if (!Reload())
             {
                 return; // Switch weapon
@@ -49,6 +52,7 @@ public class Pistol : Gun
         else if (nextAttack <= Time.time)
         {
             player.mouseLook.smooth = false;
+            recoilNum = 0;
         }
     }
 
@@ -65,7 +69,8 @@ public class Pistol : Gun
         muzzleFlash.Play();
 
         RaycastHit hit;
-        if (Physics.Raycast(player.cam.transform.position, player.cam.transform.forward, out hit, range))
+        Vector3 recoiling = new Vector3(-recoilPattern[recoilNum].x, recoilPattern[recoilNum].y, 0f);
+        if (Physics.Raycast(recoiling + player.cam.transform.position, recoiling - player.cam.transform.forward, out hit, range))
         {
             BaseEntity entity = hit.transform.GetComponent<BaseEntity>();
             if (entity != null)
@@ -83,7 +88,11 @@ public class Pistol : Gun
         }
 
         nextAttack = Time.time + fireRatePrimary;
-        player.mouseLook.recoil = new Vector2(recoil.x, Random.Range(-recoil.y, recoil.y));
+        //player.mouseLook.recoil = new Vector2(recoil.x, Random.Range(-recoil.y, recoil.y));
+        player.mouseLook.recoil = recoilPattern[recoilNum];
         player.mouseLook.smooth = true;
+        recoilNum++;
+        if (recoilNum > recoilPattern.Length - 1)
+            recoilNum = 0;
     }
 }

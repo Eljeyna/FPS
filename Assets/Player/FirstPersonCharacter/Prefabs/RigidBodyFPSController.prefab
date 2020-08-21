@@ -284,7 +284,7 @@ MonoBehaviour:
     MinimumX: -90
     MaximumX: 90
     smooth: 0
-    smoothTime: 15
+    smoothTime: 20
     recoil: {x: 0, y: 0}
     lockCursor: 1
   advancedSettings:
@@ -320,8 +320,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 372631b56aae00d4383ce1ab5efaa9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoText: {fileID: 0}
   prevWeapon: {fileID: 0}
   selectedWeapon: {fileID: 8512424321880182802}
+  weapons:
+  - {fileID: 1578798843}
+  - {fileID: 8512424321880182802}
 --- !u!208 &1467359530
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -534,7 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18956bd923d1702488e5848aad975364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 10
   headModifier: 3
   bodyModifier: 1
   legModifier: 1
@@ -552,6 +556,16 @@ MonoBehaviour:
   ammo: 360
   maxAmmo: 360
   recoil: {x: 3, y: 2}
+  recoilPattern:
+  - {x: 1, y: 1}
+  - {x: 1, y: 2}
+  - {x: 2, y: 2}
+  - {x: 2, y: 3}
+  - {x: 3, y: 3}
+  - {x: 3, y: 3}
+  recoilNum: 0
+  nextRecoilNum: 0
+  recoilDelay: 0
   muzzleFlash: {fileID: 1794157877}
   impactEffect: {fileID: 100006, guid: 0438351a6e6422d43a09930e9be00ee9, type: 3}
   ammoText: {fileID: 0}
@@ -10383,7 +10397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9e55717ecc3ba45a3ff32c998bd8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 15
   headModifier: 3
   bodyModifier: 1
   legModifier: 1
@@ -10401,6 +10415,13 @@ MonoBehaviour:
   ammo: 225
   maxAmmo: 225
   recoil: {x: 2, y: 1}
+  recoilPattern:
+  - {x: 0, y: 1}
+  - {x: 2, y: 1}
+  - {x: 2, y: 2}
+  recoilNum: 0
+  nextRecoilNum: 0
+  recoilDelay: 0
   muzzleFlash: {fileID: 1710747189}
   impactEffect: {fileID: 100006, guid: 0438351a6e6422d43a09930e9be00ee9, type: 3}
   ammoText: {fileID: 0}

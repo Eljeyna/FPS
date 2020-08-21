@@ -3565,10 +3565,54 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 79381790}
+    - target: {fileID: 2104713109, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: ammoText
+      value: 
+      objectReference: {fileID: 79381790}
     - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 79381790}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[0].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[1].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[2].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[3].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[4].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[5].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[0].x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[1].x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[2].x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512424321880182802, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
+      propertyPath: recoilPattern.Array.data[3].x
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 3}
 --- !u!114 &1467359529 stripped

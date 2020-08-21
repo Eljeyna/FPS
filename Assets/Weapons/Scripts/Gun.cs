@@ -25,6 +25,8 @@ public class Gun : MonoBehaviour
     public int maxAmmo;
 
     public Vector2 recoil;
+    public Vector2[] recoilPattern;
+    public int recoilNum;
 
     public void PrimaryAttack()
     {
