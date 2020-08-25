@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4721583653999150367}
   - component: {fileID: 4721583653999150564}
   - component: {fileID: 4721583653999150560}
-  - component: {fileID: 4721583653999150366}
+  - component: {fileID: 4332036019131096801}
   - component: {fileID: 4721583653999150365}
   m_Layer: 8
   m_Name: Enemy
@@ -169,7 +169,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4721583653999150366
+--- !u!114 &4332036019131096801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4721583653999150565}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55a5320d6d8719d47868dd021b4b9c9f, type: 3}
+  m_Script: {fileID: 11500000, guid: 34e55ee775e62a74ca48993d11698145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
@@ -199,11 +199,11 @@ MonoBehaviour:
   maxDistance: 100
   damagePrimary: 10
   damageSecondary: 0
-  attackRangePrimary: 1.5
+  attackRangePrimary: 2
   attackRangeSecondary: 0
-  fireRatePrimary: 2
+  fireRatePrimary: 1
   fireRateSecondary: 0
-  impactForce: 1000
+  impactForce: 100
   ENTITY_MASK:
     serializedVersion: 2
     m_Bits: 256

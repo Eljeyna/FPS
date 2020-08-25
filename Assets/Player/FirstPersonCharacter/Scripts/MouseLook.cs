@@ -14,7 +14,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float MaximumX = 90F;
         public bool smooth;
         public float smoothTime = 5f;
-        public Vector2 recoil;
         public bool lockCursor = true;
 
 
@@ -34,10 +33,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
-            /*m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
-            m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);*/
-            m_CharacterTargetRot *= Quaternion.Euler (0f, yRot + recoil.y / 2, 0f);
-            m_CameraTargetRot *= Quaternion.Euler (-xRot - recoil.x / 2, 0f, 0f);
+            m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
+            m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
 
             if (clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis(m_CameraTargetRot);
@@ -56,19 +53,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 //camera.localRotation = Quaternion.Slerp(camera.localRotation, m_CameraTargetRot, smoothTime * Time.deltaTime);
             }*/
 
-            if (smooth)
-            {
-                character.localRotation = Quaternion.Slerp(character.localRotation, m_CharacterTargetRot, smoothTime * Time.deltaTime);
-                camera.localRotation = Quaternion.Slerp(camera.localRotation, m_CameraTargetRot, smoothTime * Time.deltaTime);
-            }
-            else
-            {
-                character.localRotation = m_CharacterTargetRot;
-                camera.localRotation = m_CameraTargetRot;
-            }
+            character.localRotation = m_CharacterTargetRot;
+            camera.localRotation = m_CameraTargetRot;
 
-            recoil.x = 0;
-            recoil.y = 0;
             UpdateCursorLock();
         }
 

@@ -6,9 +6,15 @@ public class Pistol : Gun
     public GameObject impactEffect;
     public AmmoGUI ammoText;
 
+    private Animator animations;
+
+    private void Awake()
+    {
+        animations = GetComponent<Animator>();
+    }
+
     void Update()
     {
-
         if (reloading && nextAttack <= Time.time)
         {
             int cl = Mathf.Min(maxClip - clip, ammo);
@@ -35,33 +41,33 @@ public class Pistol : Gun
         }
         else if (Input.GetButton("Reload") && !reloading)
         {
-            player.mouseLook.smooth = false;
-            recoilNum = 0;
+            spread = 0;
             Reload();
         }
-        else if (clip <= 0 && nextAttack <= Time.time)
+        else if (clip != -1 && clip == 0 && nextAttack <= Time.time)
         {
             fireWhenEmpty = false;
-            player.mouseLook.smooth = false;
-            recoilNum = 0;
-            if (!Reload())
+            spread = 0;
+            if (autoreload && !Reload())
             {
-                return; // Switch weapon
+                weaponSwitch.ShouldSwitch();
             }
         }
-        else if (nextAttack <= Time.time)
+        else if (weaponIdle <= Time.time)
         {
-            player.mouseLook.smooth = false;
-            recoilNum = 0;
+            spread = 0;
+            animations.SetInteger("Animation", 0);
+            weaponIdle = Time.time + 1f;
         }
     }
 
-    new void PrimaryAttack()
+    public override void PrimaryAttack()
     {
         if (clip <= 0 && fireWhenEmpty)
         {
-            player.mouseLook.smooth = false;
+            spread = 0;
             nextAttack = Time.time + 0.1f;
+            weaponIdle = Time.time + 0.1f;
             return;
         }
 
@@ -69,8 +75,9 @@ public class Pistol : Gun
         muzzleFlash.Play();
 
         RaycastHit hit;
-        Vector3 recoiling = new Vector3(-recoilPattern[recoilNum].x, recoilPattern[recoilNum].y, 0f);
-        if (Physics.Raycast(recoiling + player.cam.transform.position, recoiling - player.cam.transform.forward, out hit, range))
+
+        if (Physics.Raycast(player.cam.transform.position, Spread(), out hit, range))
+        //if (Physics.Raycast(player.cam.transform.position, player.cam.transform.forward, out hit, range))
         {
             BaseEntity entity = hit.transform.GetComponent<BaseEntity>();
             if (entity != null)
@@ -84,15 +91,57 @@ public class Pistol : Gun
             }
 
             GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impact, 0.25f);
+            Destroy(impact, fireRatePrimary / 1.5f);
         }
 
         nextAttack = Time.time + fireRatePrimary;
-        //player.mouseLook.recoil = new Vector2(recoil.x, Random.Range(-recoil.y, recoil.y));
-        player.mouseLook.recoil = recoilPattern[recoilNum];
-        player.mouseLook.smooth = true;
-        recoilNum++;
-        if (recoilNum > recoilPattern.Length - 1)
-            recoilNum = 0;
+        weaponIdle = Time.time + fireRatePrimary;
+    }
+
+    public override void SecondaryAttack()
+    {
+        return;
+    }
+
+    public override Vector3 Spread()
+    {
+        Vector3 forwardVector = Vector3.forward;
+        float deviation = Random.Range(spreadPattern[0].x, spreadPattern[1].x);
+        float angle = Random.Range(spreadPattern[0].y, spreadPattern[1].y);
+        forwardVector = Quaternion.AngleAxis(deviation, Vector3.up) * forwardVector;
+        forwardVector = Quaternion.AngleAxis(angle, Vector3.forward) * forwardVector;
+        forwardVector = player.cam.transform.rotation * forwardVector;
+
+        return forwardVector;
+    }
+
+    public override bool Reload()
+    {
+        if (ammo <= 0)
+        {
+            return false;
+        }
+
+        int cl = Mathf.Min(maxClip - clip, ammo);
+
+        if (cl <= 0)
+            return false;
+
+        nextAttack = Time.time + reloadTime;
+        reloading = true;
+
+        return true;
+    }
+
+    public override void Deploy()
+    {
+        animations.SetInteger("Animation", 1);
+        weaponIdle = Time.time + deployTime;
+    }
+
+    public override void Holster()
+    {
+        animations.SetInteger("Animation", 2);
+        weaponIdle = Time.time + holsterTime;
     }
 }

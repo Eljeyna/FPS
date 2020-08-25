@@ -170,10 +170,9 @@ GameObject:
   - component: {fileID: 11400004}
   - component: {fileID: 1467359529}
   - component: {fileID: 2104713109}
-  - component: {fileID: 1467359530}
   m_Layer: 8
   m_Name: RigidBodyFPSController
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -285,7 +284,6 @@ MonoBehaviour:
     MaximumX: 90
     smooth: 0
     smoothTime: 20
-    recoil: {x: 0, y: 0}
     lockCursor: 1
   advancedSettings:
     groundCheckDistance: 0.01
@@ -307,6 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   health: 0
+  flagDeath: 0
   healthText: {fileID: 0}
 --- !u!114 &2104713109
 MonoBehaviour:
@@ -321,27 +320,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoText: {fileID: 0}
+  nextSwitch: 0
   prevWeapon: {fileID: 0}
   selectedWeapon: {fileID: 8512424321880182802}
   weapons:
   - {fileID: 1578798843}
   - {fileID: 8512424321880182802}
---- !u!208 &1467359530
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100006}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.5, y: 0.8, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &535061947
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +510,25 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!95 &233079381
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898030473}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 73e1aa0946095e34882b765921974038, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &8512424321880182802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,25 +550,31 @@ MonoBehaviour:
   fireRateSecondary: 0.5
   impactForce: 40
   player: {fileID: 11400004}
+  weaponSwitch: {fileID: 2104713109}
   nextAttack: 0
   reloadTime: 2
+  holsterTime: 0.5
+  deployTime: 0.5
+  weaponIdle: 0
   reloading: 0
   fireWhenEmpty: 0
+  autoreload: 1
   clip: 40
   maxClip: 40
   ammo: 360
   maxAmmo: 360
-  recoil: {x: 3, y: 2}
-  recoilPattern:
-  - {x: 1, y: 1}
-  - {x: 1, y: 2}
-  - {x: 2, y: 2}
-  - {x: 2, y: 3}
-  - {x: 3, y: 3}
-  - {x: 3, y: 3}
-  recoilNum: 0
-  nextRecoilNum: 0
-  recoilDelay: 0
+  spreadPattern:
+  - {x: 0, y: 0}
+  - {x: 1, y: 60}
+  - {x: 2, y: 63}
+  - {x: -3, y: -67}
+  - {x: 3, y: 70}
+  - {x: -3, y: -72}
+  - {x: 4, y: 75}
+  - {x: -4, y: -78}
+  - {x: 5, y: 84}
+  - {x: -5, y: -87}
+  spread: 0
   muzzleFlash: {fileID: 1794157877}
   impactEffect: {fileID: 100006, guid: 0438351a6e6422d43a09930e9be00ee9, type: 3}
   ammoText: {fileID: 0}
@@ -5540,7 +5549,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794157874}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.074999996, y: 2.1499999, z: 0.185}
+  m_LocalPosition: {x: 0.05, y: 0, z: 0.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 581882506}
@@ -10385,6 +10394,25 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!95 &1833746500
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872656549}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d0af6f88c7351c14eaa41727fd1e6512, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1578798843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10406,22 +10434,23 @@ MonoBehaviour:
   fireRateSecondary: 0.5
   impactForce: 20
   player: {fileID: 11400004}
+  weaponSwitch: {fileID: 2104713109}
   nextAttack: 0
   reloadTime: 2
+  holsterTime: 0.5
+  deployTime: 0.5
+  weaponIdle: 0
   reloading: 0
   fireWhenEmpty: 0
+  autoreload: 1
   clip: 15
   maxClip: 15
   ammo: 225
   maxAmmo: 225
-  recoil: {x: 2, y: 1}
-  recoilPattern:
-  - {x: 0, y: 1}
-  - {x: 2, y: 1}
-  - {x: 2, y: 2}
-  recoilNum: 0
-  nextRecoilNum: 0
-  recoilDelay: 0
+  spreadPattern:
+  - {x: 0, y: 33}
+  - {x: 3, y: 257}
+  spread: 0
   muzzleFlash: {fileID: 1710747189}
   impactEffect: {fileID: 100006, guid: 0438351a6e6422d43a09930e9be00ee9, type: 3}
   ammoText: {fileID: 0}
@@ -10432,6 +10461,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 400000}
     m_Modifications:
+    - target: {fileID: 100002, guid: 1dc2a27ad3a63d24bad7f1c6d159013e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100016, guid: 1dc2a27ad3a63d24bad7f1c6d159013e, type: 3}
       propertyPath: m_Name
       value: Rifle
@@ -10511,6 +10544,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -10545,7 +10582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10593,13 +10630,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
---- !u!1 &1872656549 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
-  m_PrefabInstance: {fileID: 1872756245}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1872356485 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
+  m_PrefabInstance: {fileID: 1872756245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1872656549 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100016, guid: cc34ae6a7e465584aa9e4dcc48852048, type: 3}
   m_PrefabInstance: {fileID: 1872756245}
   m_PrefabAsset: {fileID: 0}

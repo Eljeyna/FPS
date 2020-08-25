@@ -4,12 +4,12 @@ public class BasePlayer : BaseEntity
 {
     public HealthGUI healthText;
 
-    private new void Awake()
+    public override void Awake()
     {
-        base.Awake();
+        health = maxHealth;
     }
 
-    public new void TakeDamage(float amount)
+    public override void TakeDamage(float amount)
     {
         health -= amount;
 
@@ -23,7 +23,7 @@ public class BasePlayer : BaseEntity
         healthText.ChangeText(health);
     }
 
-    public new void Die()
+    public override void Die()
     {
         health = maxHealth;
         healthText.ChangeText("100");

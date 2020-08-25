@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class Gun : MonoBehaviour
+public abstract class Gun : MonoBehaviour
 {
     public float damage;
     public float headModifier = 3f;
@@ -13,51 +13,30 @@ public class Gun : MonoBehaviour
     public float impactForce;
 
     public RigidbodyFirstPersonController player;
+    public WeaponSwitch weaponSwitch;
 
     public float nextAttack;
     public float reloadTime;
+    public float holsterTime;
+    public float deployTime;
+    public float weaponIdle;
     public bool reloading = false;
     public bool fireWhenEmpty = false;
+
+    public bool autoreload = true;
 
     public int clip;
     public int maxClip;
     public int ammo;
     public int maxAmmo;
 
-    public Vector2 recoil;
-    public Vector2[] recoilPattern;
-    public int recoilNum;
+    public Vector2[] spreadPattern;
+    public int spread;
 
-    public void PrimaryAttack()
-    {
-        return;
-    }
-
-    public void SecondaryAttack()
-    {
-        return;
-    }
-
-    public void Deploy()
-    {
-        return;
-    }
-
-    public bool Reload()
-    {
-        if (ammo <= 0)
-        {
-            return false;
-        }
-
-        int cl = Mathf.Min(maxClip - clip, ammo);
-
-        if (cl <= 0)
-            return false;
-
-        nextAttack = Time.time + reloadTime;
-        reloading = true;
-
-        return true;
-    }
+    public abstract void PrimaryAttack();
+    public abstract void SecondaryAttack();
+    public abstract Vector3 Spread();
+    public abstract bool Reload();
+    public abstract void Deploy();
+    public abstract void Holster();
 }

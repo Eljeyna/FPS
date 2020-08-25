@@ -11,21 +11,39 @@ public class EnemyController : MonoBehaviour
     public float attackRangeSecondary;
     public float fireRatePrimary;
     public float fireRateSecondary;
+    public float waitingTime;
     public float impactForce;
     public LayerMask ENTITY_MASK;
     public Transform target;
     public Transform eyesPosition;
     public float nextAttack;
+    public float nextWait;
 
     private NavMeshAgent agent;
+    private Animator animations;
+    private BaseEnemy thisEnemy;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animations = GetComponent<Animator>();
+        thisEnemy = GetComponent<BaseEnemy>();
     }
 
     void Update()
     {
+        if (thisEnemy.flagDeath)
+        {
+            agent.enabled = false;
+            GetComponent<CapsuleCollider>().enabled = false;
+            animations.SetInteger("Animation", 4);
+            this.enabled = false;
+            return;
+        }
+
+        if (nextWait > Time.time)
+            return;
+
         if (target == null)
         {
             Collider[] findTarget = Physics.OverlapSphere(transform.position, lookRadius, ENTITY_MASK);
@@ -43,7 +61,11 @@ public class EnemyController : MonoBehaviour
             }
 
             if (target == null)
+            {
+                nextWait = Time.time + waitingTime;
+                animations.SetInteger("Animation", 0);
                 return;
+            }
         }
 
         float distance = Vector3.Distance(target.position, transform.position);
@@ -55,6 +77,10 @@ public class EnemyController : MonoBehaviour
         }
 
         agent.SetDestination(target.position);
+        if (nextAttack - fireRatePrimary / 4 <= Time.time)
+        {
+            animations.SetInteger("Animation", 2);
+        }
 
         if (distance <= attackRangePrimary)
         {
@@ -70,24 +96,20 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
+        animations.SetInteger("Animation", 1);
+
         RaycastHit hit;
         if (Physics.Raycast(eyesPosition.position, transform.forward, out hit, attackRangePrimary))
         {
             BaseEntity entity = hit.transform.GetComponent<BaseEntity>();
             if (entity != null)
             {
-                if (entity.IsPlayer())
-                {
-                    BasePlayer player = (BasePlayer)entity;
-                    player.TakeDamage(damagePrimary);
-                }
-                else
-                    entity.TakeDamage(damagePrimary);
+                entity.TakeDamage(damagePrimary);
             }
 
             if (hit.rigidbody != null)
             {
-                hit.rigidbody.AddForce(-hit.normal * impactForce);
+                hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
             }
         }
 

@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/3D Free Modular Kit/Test_Map.unity
+    path: Assets/Packs/3D Free Modular Kit/Test_Map.unity
     guid: 7b533dfe561bc47c8975c955fe4ef3d3
   m_configObjects: {}
