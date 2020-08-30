@@ -3,7 +3,6 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public float lookRadius;
     public float maxDistance;
     public float damagePrimary;
     public float damageSecondary;
@@ -22,12 +21,14 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animations;
     private BaseEnemy thisEnemy;
+    private BoxCollider triggerEnemy;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animations = GetComponent<Animator>();
         thisEnemy = GetComponent<BaseEnemy>();
+        triggerEnemy = GetComponent<BoxCollider>();
     }
 
     void Update()
@@ -36,6 +37,7 @@ public class EnemyController : MonoBehaviour
         {
             agent.enabled = false;
             GetComponent<CapsuleCollider>().enabled = false;
+            triggerEnemy.enabled = false;
             animations.SetInteger("Animation", 4);
             this.enabled = false;
             return;
@@ -46,21 +48,11 @@ public class EnemyController : MonoBehaviour
 
         if (target == null)
         {
-            Collider[] findTarget = Physics.OverlapSphere(transform.position, lookRadius, ENTITY_MASK);
-
-            if (findTarget.Length == 0)
-                return;
-
-            foreach(Collider enemyTarget in findTarget)
+            if (thisEnemy.attacker != null)
             {
-                if (findTarget[0] != enemyTarget)
-                {
-                    target = enemyTarget.transform;
-                    break;
-                }
+                target = thisEnemy.attacker.gameObject.transform;
             }
-
-            if (target == null)
+            else
             {
                 nextWait = Time.time + waitingTime;
                 animations.SetInteger("Animation", 0);
@@ -73,10 +65,12 @@ public class EnemyController : MonoBehaviour
         if (distance > maxDistance)
         {
             target = null;
+            triggerEnemy.enabled = true;
             return;
         }
 
         agent.SetDestination(target.position);
+        FaceToFace();
         if (nextAttack - fireRatePrimary / 4 <= Time.time)
         {
             animations.SetInteger("Animation", 2);
@@ -84,7 +78,6 @@ public class EnemyController : MonoBehaviour
 
         if (distance <= attackRangePrimary)
         {
-            FaceToFace();
             PrimaryAttack();
         }
     }
@@ -104,7 +97,7 @@ public class EnemyController : MonoBehaviour
             BaseEntity entity = hit.transform.GetComponent<BaseEntity>();
             if (entity != null)
             {
-                entity.TakeDamage(damagePrimary);
+                entity.TakeDamage(damagePrimary, thisEnemy);
             }
 
             if (hit.rigidbody != null)
@@ -128,9 +121,9 @@ public class EnemyController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter(Collider other)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
+        triggerEnemy.enabled = false;
+        target = other.gameObject.transform;
     }
 }

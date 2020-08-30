@@ -7,10 +7,12 @@ public class Pistol : Gun
     public AmmoGUI ammoText;
 
     private Animator animations;
+    private BasePlayer thisPlayer;
 
     private void Awake()
     {
         animations = GetComponent<Animator>();
+        thisPlayer = gameObject.transform.parent.parent.GetComponent<BasePlayer>();
     }
 
     void Update()
@@ -82,7 +84,7 @@ public class Pistol : Gun
             BaseEntity entity = hit.transform.GetComponent<BaseEntity>();
             if (entity != null)
             {
-                entity.TakeDamage(damage);
+                entity.TakeDamage(damage, thisPlayer);
             }
 
             if (hit.rigidbody != null)

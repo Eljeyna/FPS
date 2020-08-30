@@ -812,6 +812,7 @@ GameObject:
   - component: {fileID: 8429865231615740692}
   - component: {fileID: 3568628872616989892}
   - component: {fileID: 1941030999}
+  - component: {fileID: 3791459762955674845}
   - component: {fileID: 8334860237641494184}
   - component: {fileID: 2627819788037972667}
   - component: {fileID: 1776253973}
@@ -872,6 +873,19 @@ CapsuleCollider:
   m_Height: 1.9
   m_Direction: 1
   m_Center: {x: 0, y: 0.95, z: 0}
+--- !u!65 &3791459762955674845
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803014352389650695}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 4, z: 20}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8334860237641494184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -887,6 +901,7 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   flagDeath: 0
+  attacker: {fileID: 0}
 --- !u!114 &2627819788037972667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,8 +914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5772db301ebfa42b9e6e1707bb9423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 10
-  maxDistance: 100
+  maxDistance: 50
   damagePrimary: 10
   damageSecondary: 0
   attackRangePrimary: 2

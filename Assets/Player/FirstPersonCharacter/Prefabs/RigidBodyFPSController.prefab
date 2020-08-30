@@ -306,6 +306,7 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   flagDeath: 0
+  attacker: {fileID: 0}
   healthText: {fileID: 0}
 --- !u!114 &2104713109
 MonoBehaviour:

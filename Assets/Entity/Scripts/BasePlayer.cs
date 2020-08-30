@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class BasePlayer : BaseEntity
+﻿public class BasePlayer : BaseEntity
 {
     public HealthGUI healthText;
 
@@ -9,9 +7,10 @@ public class BasePlayer : BaseEntity
         health = maxHealth;
     }
 
-    public override void TakeDamage(float amount)
+    public override void TakeDamage(float amount, BaseEntity attacker)
     {
         health -= amount;
+        this.attacker = attacker;
 
         if (health <= 0)
         {
