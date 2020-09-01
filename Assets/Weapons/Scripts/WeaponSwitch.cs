@@ -27,7 +27,7 @@ public class WeaponSwitch : MonoBehaviour
         {
             nextSwitch = 0;
             prevWeapon.gameObject.SetActive(false);
-            selectedWeapon.nextAttack = Time.time + selectedWeapon.deployTime;
+            selectedWeapon.nextAttack = Time.time + selectedWeapon.deployTime + 0.1f;
             selectedWeapon.gameObject.SetActive(true);
             selectedWeapon.Deploy();
             ammoText.ChangeText();
@@ -51,7 +51,7 @@ public class WeaponSwitch : MonoBehaviour
             return;
 
         selectedWeapon.Holster();
-        selectedWeapon.nextAttack = Time.time + selectedWeapon.holsterTime;
+        selectedWeapon.nextAttack = Time.time + selectedWeapon.holsterTime + 0.1f;
         selectedWeapon.reloading = false;
         prevWeapon = selectedWeapon;
         selectedWeapon = weapon;

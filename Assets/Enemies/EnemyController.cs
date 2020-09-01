@@ -125,5 +125,6 @@ public class EnemyController : MonoBehaviour
     {
         triggerEnemy.enabled = false;
         target = other.gameObject.transform;
+        waitingTime = Time.time + 0.5f;
     }
 }

@@ -9,10 +9,14 @@ public class Pistol : Gun
     private Animator animations;
     private BasePlayer thisPlayer;
 
+    [HideInInspector]
+    public CameraShake shaker;
+
     private void Awake()
     {
         animations = GetComponent<Animator>();
         thisPlayer = gameObject.transform.parent.parent.GetComponent<BasePlayer>();
+        shaker = player.GetComponent<CameraShake>();
     }
 
     void Update()
@@ -75,6 +79,7 @@ public class Pistol : Gun
 
         clip--;
         muzzleFlash.Play();
+        animations.Play("Fire");
 
         RaycastHit hit;
 
@@ -113,6 +118,8 @@ public class Pistol : Gun
         forwardVector = Quaternion.AngleAxis(deviation, Vector3.up) * forwardVector;
         forwardVector = Quaternion.AngleAxis(angle, Vector3.forward) * forwardVector;
         forwardVector = player.cam.transform.rotation * forwardVector;
+
+        StartCoroutine(shaker.Shake(fireRatePrimary / 2, 0.25f));
 
         return forwardVector;
     }

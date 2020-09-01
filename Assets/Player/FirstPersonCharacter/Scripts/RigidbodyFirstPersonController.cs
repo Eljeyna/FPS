@@ -78,6 +78,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 
         public Camera cam;
+        public TimeManager timeManager;
+        public KeyCode SlowTimeKey = KeyCode.V;
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
@@ -133,6 +135,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
                 m_Jump = true;
+            }
+
+            if (Input.GetKeyDown(SlowTimeKey))
+            {
+                timeManager.SlowDown(0.25f, 2f);
             }
         }
 

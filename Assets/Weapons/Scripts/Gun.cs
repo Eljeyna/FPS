@@ -15,10 +15,12 @@ public abstract class Gun : MonoBehaviour
     public RigidbodyFirstPersonController player;
     public WeaponSwitch weaponSwitch;
 
+    [HideInInspector]
     public float nextAttack;
     public float reloadTime;
     public float holsterTime;
     public float deployTime;
+    [HideInInspector]
     public float weaponIdle;
     public bool reloading = false;
     public bool fireWhenEmpty = false;
@@ -31,6 +33,7 @@ public abstract class Gun : MonoBehaviour
     public int maxAmmo;
 
     public Vector2[] spreadPattern;
+    [HideInInspector]
     public int spread;
 
     public abstract void PrimaryAttack();
