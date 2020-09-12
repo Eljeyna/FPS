@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 5ccf681a5a6a0d34ba50f7346e31858c, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 123a078fa5f72314fb030c7205a36cbe, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 8d87b9b61e92b3f44b1bc6fb89a2c27c, type: 2}
 --- !u!196 &5
 NavMeshSettings:
@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gate Access Machine
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 672113ba13572fe4da40df2796bc3611, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 672113ba13572fe4da40df2796bc3611, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -237,6 +241,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 672113ba13572fe4da40df2796bc3611, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 672113ba13572fe4da40df2796bc3611, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 672113ba13572fe4da40df2796bc3611, type: 3}
