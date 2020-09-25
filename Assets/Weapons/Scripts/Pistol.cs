@@ -119,7 +119,7 @@ public class Pistol : Gun
         forwardVector = Quaternion.AngleAxis(angle, Vector3.forward) * forwardVector;
         forwardVector = player.cam.transform.rotation * forwardVector;
 
-        StartCoroutine(shaker.Shake(fireRatePrimary / 2, 0.25f));
+        //StartCoroutine(shaker.Shake(fireRatePrimary / 2, 0.25f));
 
         return forwardVector;
     }
